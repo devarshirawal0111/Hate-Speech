@@ -3,14 +3,24 @@ import json
 
 app = Flask(__name__)
 
-with open('./Data/amitabhbachchan/posts.json') as fileptr:
+username = "amitabhbachchan"
+path = "Data/" + username + "/posts.json"
+
+with open(path) as fileptr:
     data = json.loads(fileptr.read())
 all_data=[]
 
 
-
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/twitter')
+def twitter():
+    return render_template('twitter.html')
+
+@app.route('/instagram')
+def instagram():
     # all_data = []
     # # temp=[]
     # count = 0
@@ -30,7 +40,7 @@ def index():
     #     if count == len(data):
     #         all_data.append(temp)
     print((all_data))
-    return render_template("index.html",data=all_data,length=range(len(data)))
+    return render_template("instagram.html",data=all_data,length=range(len(data)))
 
 def data_format():
     global all_data
