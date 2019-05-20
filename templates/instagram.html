@@ -12,43 +12,171 @@
   <title>SB Admin - Dashboard</title>
 
   <!-- Custom fonts for this template-->
-  <link href="{{ url_for('static',filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
-    type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link href="{{ url_for('static',filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
   <link href="{{ url_for('static',filename='vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="{{ url_for('static',filename='css/sb-admin.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <!--<link href="http://127.0.0.1:5000/static/css/sb-admin.css" rel="stylesheet">-->
 
   <style>
-    .row-content {
-      margin: 5% auto;
-      padding: 5% 10%;
-      min-height: 50px;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
+    .image{
+      cursor: pointer;
+      transition: 0.3s
     }
 
-    .card-element {
-      padding: 1% 1%;
-      border: none;
+    .image:hover {opacity: 0.8;}
+
+        /* The Modal (background) */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 100; /* Sit on top */
+      padding-top: 100px; /* Location of the box */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
     }
 
-  </style>
+    /* Modal Content (image) */
+    .modal-content {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+    }
 
-  <script type="text/javascript">
-    function ChangeUrl(title, url) {
-      if (typeof (history.pushState) != "undefined") {
-        var obj = { Title: title, Url: url };
-        history.pushState(obj, obj.Title, obj.Url);
-      } else {
-        alert("Browser does not support HTML5.");
+    /* Caption of Modal Image */
+    #caption {
+      margin: auto;
+      display: block;
+      width: 80%;
+      max-width: 700px;
+      text-align: center;
+      color: #ccc;
+      padding: 10px 0;
+      height: 150px;
+    }
+
+    /* Add Animation */
+    .modal-content, #caption {
+      -webkit-animation-name: zoom;
+      -webkit-animation-duration: 0.6s;
+      animation-name: zoom;
+      animation-duration: 0.6s;
+    }
+
+    @-webkit-keyframes zoom {
+      from {-webkit-transform:scale(0)}
+      to {-webkit-transform:scale(1)}
+    }
+
+    @keyframes zoom {
+      from {transform:scale(0)}
+      to {transform:scale(1)}
+    }
+
+    /* The Close Button */
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* 100% Image Width on Smaller Screens */
+    @media only screen and (max-width: 700px){
+      .modal-content {
+        width: 100%;
       }
     }
 
+    .row-content {
+        margin:5% auto;
+        padding: 5% 10%;
+        min-height:50px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .card-element{
+        padding: 1% 1%;
+        border: none;
+    }
+    .carousel-inner img {
+        width: 100%;
+        height: 100%;
+    }
+  </style>
+
+  <script type="text/javascript">
+  function ChangeImg(img_id, modal_id, modImg_id){
+  // Get the modal
+  var modal = document.getElementById(modal_id);
+
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var img = document.getElementById(img_id);
+  var modalImg = document.getElementById(modImg_id);
+  //var captionText = document.getElementById();
+
+  modal.style.display = "block";
+  modalImg.src = img.src;
+  //captionText.innerHTML = this.alt;
+
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+  modal.style.display = "none";
+  }
+  }
+
+  function ChangeVid(vid_id, modal_id, modVid_id, modVidSource_id, VidSource){
+  // Get the modal
+  var modal = document.getElementById(modal_id);
+  //var vid_source = document.getElementById(vidSource_id);
+  var modalVid_source = document.getElementById(modVidSource_id);
+
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var vid = document.getElementById(vid_id);
+  var modalVid = document.getElementById(modVid_id);
+  //var captionText = document.getElementById();
+
+  modal.style.display = "block";
+  modalVid_source.src = VidSource;
+  //modalVid.poster = vid.src;
+  //captionText.innerHTML = this.alt;
+
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[1];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+  modal.style.display = "none";
+  }
+}
 
   </script>
 
@@ -56,17 +184,23 @@
 
 <body id="page-top">
 
-  <!-- The Modal -->
-<div id="myModal" class="modal">
-
-    <!-- The Close Button -->
+<!-- The Modal -->
+  <div id="ImgModal" class="modal" style="background:rgba(0,0,0,0.9)">
     <span class="close">&times;</span>
-  
-    <!-- Modal Content (The Image) -->
-    <img class="modal-content" id="img01">
-  
-    <!-- Modal Caption (Image Text) -->
+    <img class="modal-content" id="img01" style="width:100%; max-width:500px" >
     <div id="caption"></div>
+  </div>
+
+<div id="VidModal" class="modal" style="background:rgba(0,0,0,0.9)">
+  <span class="close">&times;</span>
+  <div class="embed-responsive embed-responsive-16by9 modal-content" style="width:100%; max-width:300px">
+    <video id="ModVid" controls autoplay loop>
+      <source id="ModVidSrc" src="" type="video/mp4">
+    </video>
+  </div>
+
+
+    <div id="Vidcaption"></div>
   </div>
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
@@ -80,12 +214,8 @@
     <!-- Navbar Search -->
     <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search for..." aria-label="Search"
-          aria-describedby="basic-addon2">
+        <input type="hidden" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
         <div class="input-group-append">
-          <button class="btn btn-primary" type="button">
-            <i class="fas fa-search"></i>
-          </button>
         </div>
       </div>
     </form>
@@ -93,8 +223,7 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto ml-md-0">
       <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-bell fa-fw"></i>
           <span class="badge badge-danger">9+</span>
         </a>
@@ -106,8 +235,7 @@
         </div>
       </li>
       <li class="nav-item dropdown no-arrow mx-1">
-        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-envelope fa-fw"></i>
           <span class="badge badge-danger">7</span>
         </a>
@@ -119,8 +247,7 @@
         </div>
       </li>
       <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -143,22 +270,19 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Home</span>
         </a>
-      </li>
-      <li class="nav-item active">
+      </li><li class="nav-item active">
         <a class="nav-link" href="instagram">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Instagram</span>
         </a>
-      </li>
-      <li class="nav-item">
+      </li><li class="nav-item">
         <a class="nav-link" href="twitter">
-          <i class="fa fa-twitter-square"></i>
+          <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Twitter</span>
         </a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
+        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-fw fa-folder"></i>
           <span>Pages</span>
         </a>
@@ -189,168 +313,130 @@
 
       <div class="container-fluid">
 
-        <!--Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="#">Instagram</a>
-          </li>
-          <li class="breadcrumb-item active">Your post's</li>
-        </ol>
-
-        <!-- Icon Cards-->
-        <!-- <div class="row">
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-primary o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-comments"></i>
-                </div>
-                <div class="mr-5">26 New Messages!</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-warning o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-list"></i>
-                </div>
-                <div class="mr-5">11 New Tasks!</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-success o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-shopping-cart"></i>
-                </div>
-                <div class="mr-5">123 New Orders!</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-          <div class="col-xl-3 col-sm-6 mb-3">
-            <div class="card text-white bg-danger o-hidden h-100">
-              <div class="card-body">
-                <div class="card-body-icon">
-                  <i class="fas fa-fw fa-life-ring"></i>
-                </div>
-                <div class="mr-5">13 New Tickets!</div>
-              </div>
-              <a class="card-footer text-white clearfix small z-1" href="#">
-                <span class="float-left">View Details</span>
-                <span class="float-right">
-                  <i class="fas fa-angle-right"></i>
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>-->
-
-        <!-- Area Chart Example-->
-        <!-- <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-chart-area"></i>
-            Area Chart Example</div>
-          <div class="card-body">
-            <canvas id="myAreaChart" width="100%" height="30"></canvas>
-          </div>
-          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div> -->
 
         <div>
-          {% for row in data %}
-          <div class="card-deck">
-            {% for col in row %}
-            {% if col['type'] == "image" %}
-            <div class="card card-element">
-              <img class="card-img-top" width="240px" height="240 px"
-                src={{ col['image_versions2']['candidates'][1]['url'] }} alt="Card image cap">
-              <div class="card-body">
-                <p class="card-text">
-                  <small class="text-muted" style="font-size: 24px"><i class="fa fa-thumbs-o-up"></i> <b
-                      style="font-size:18px">{{col['like_count']}} likes</b></small>
-                </p>
-                <p class="card-text"> {{col['caption']['text']}} </p>
-              </div>
+        {% for row in data %}
+        <div class="card-deck">
+          {% for col in row %}
+          {% if col['type'] == "image" %}
+          <div class="card card-element">
+            <img id="img_{{col['id']}}" class="card-img-top image" width="240px" height="240 px" onclick="ChangeImg('img_{{col['id']}}','ImgModal','img01')" src= "{{ col['image_versions2']['candidates'][0]['url'] }}" alt="Card image cap">
+            <div class="card-body">
+              <p class="card-text"> {{col['caption']['text']}} </p>
+              <p class="card-text">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </p>
             </div>
-            <br>
-            {% endif %}
-            {% if col['type'] == "video" %}
-            <div class="card card-element">
-              <div class="embed-responsive embed-responsive-1by1">
-                <video class="embed-responsive-item" controls
-                  poster={{ col['image_versions2']['candidates'][1]['url'] }}>
-                  <source src={{ col['video_versions'][0]['url'] }} type="video/mp4">
+          </div>
+          <br>
+          {% endif %}
+          {% if col['type'] == "video" %}
+          <div class="card card-element">
+
+
+              <img class="image card-img-top" id="vid_{{col['id']}}" src="{{col['image_versions2']['candidates'][1]['url']}}" onclick="ChangeVid('vid_{{col['id']}}','VidModal', 'ModVid', 'ModVidSrc', '{{col['video_versions'][0]['url']}}')">
+
+            <div class="card-body">
+              <p class="card-text"> {{col['caption']['text']}} </p>
+              <p class="card-text">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </p>
+            </div>
+          </div>
+          <br>
+          {% endif %}
+          {% if col['type'] == "carousel_video" %}
+          <!--Carousel Wrapper-->
+          <div id="vid_{{col['id']}}" class="carousel slide" data-interval="false">
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+              {% for j in col['carousel_media'] %}
+              {% if not j['skip'] %}
+              <li data-target="#vid_{{col['id']}}" data-slide-to="{{j['media_count']}}" class="active"></li>
+              {%else%}
+              <li data-target="#vid_{{col['id']}}" data-slide-to="{{j['media_count']}}"></li>
+              {%endif%}
+              {%endfor%}
+            </ol>
+            <!--/.Indicators-->
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+              {% for j in col['carousel_media'] %}
+              {% if not j['skip'] %}
+              <div class="carousel-item active embed-responsive-1by1">
+                <video class="video-fluid embed-responsive-item" controls width="240px" height="240px">
+                  <source src="{{j['video_versions'][0]['url']}}" type="video/mp4"/>
                 </video>
               </div>
-              <div class="card-body">
-                <p class="card-text"> {{col['caption']['text']}} </p>
-                <p class="card-text">
-                  <small class="text-muted">Last updated 3 mins ago</small>
-                </p>
+              {%else%}
+              <div class="carousel-item embed-responsive-1by1">
+                <video class="video-fluid embed-responsive-item" controls width="240px" height="240px">
+                  <source src="{{j['video_versions'][0]['url']}}" type="video/mp4"/>
+                </video>
               </div>
+              {%endif%}
+              {%endfor%}
             </div>
-            <br>
-            {% endif %}
-            {% if col['type'] == "carousel_image" %}
-            <div class="card">
-              <div id={{col['id']}} class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
+            <!--/.Slides-->
+            <!--Controls-->
+            <a class="carousel-control-prev" href="#vid_{{col['id']}}" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#vid_{{col['id']}}" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            <!--/.Controls-->
+          </div>
 
-                  <ol class="carousel-indicators">
-                    {% for j in col['carousel_media'] %}
-                    {% if not j['skip'] %}
-                    <li data-target="#myCarousel" data-slide-to=j['media_count'] class="active"></li>
-                    {% endif %}
-                    <li data-target="#myCarousel" data-slide-to=j['media_count'] class="active"></li>
-                    {% endfor %}
-                  </ol>
+          <!--Carousel Wrapper-->
+          {%endif%}
+          {% if col['type'] == "carousel_image" %}
+          <div class="card">
+
+            <div id="img_{{col['id']}}" class = "carousel slide" data-interval="false">
+              <div class="carousel-inner">
+
+                <ul class="carousel-indicators">
                   {% for j in col['carousel_media'] %}
                   {% if not j['skip'] %}
-                  <div class="carousel-item active">
-                    <img class="d-block w-100" src={{j['image_versions2']['candidates'][1]['url']}} alt="First slide">
-                  </div>
+                  <li data-target="#img_{{ col['id'] }}" data-slide-to={{ j['media_count'] }} class="active"></li>
+
+                  {% else %}
+                  <li data-target="#img_{{ col['id'] }}" data-slide-to={{ j['media_count'] }}></li>
                   {% endif %}
-                  <div class="carousel-item">
-                    <img class="d-block w-100" src={{j['image_versions2']['candidates'][1]['url']}} alt="First slide">
-                  </div>
                   {% endfor %}
+                </ul>
+                {% for j in col['carousel_media'] %}
+                {% if not j['skip'] %}
+                <div class="carousel-item active">
+                  <img class="d-block w-100" src="{{ j['image_versions2']['candidates'][1]['url'] }}"
+                       alt="First slide">
                 </div>
-                <p class="card-text"> {{col['caption']['text']}} </p>
-                <a class="carousel-control-prev" href={{col['href']}} role="button" data-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href={{col['href']}} role="button" data-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
+                {% endif %}
+                <div class="carousel-item">
+                  <img class="d-block w-100" src="{{j['image_versions2']['candidates'][1]['url']}}"
+                       alt="First slide">
+                </div>
+                {% endfor %}
               </div>
-            </div>
-            <br>
-            {% endif %}
-            {% endfor %}
+              <p class="card-text"> {{col['caption']['text']}} </p>
+              <a class="carousel-control-prev" href="#img_{{col['id']}}" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#img_{{col['id']}}" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
           </div>
+          </div>
+          <br>
+          {% endif %}
           {% endfor %}
+        </div>
+        {% endfor %}
         </div>
 
 
@@ -378,8 +464,7 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

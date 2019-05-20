@@ -85,10 +85,10 @@ print("Data written in 'posts.json'")
 #     i=i+1
 #     print(i, final[i]['id'])
 #
-# with open("./{}/comments2.json".format(username), "w") as outfile:
+# with open("./{}/comments.json".format(username), "w") as outfile:
 #     json.dump(commentList, outfile, indent=4, ensure_ascii=False)
 # print("Comments written to 'comments.json'")
-#print("Total errors: ", error)
+# print("Total errors: ", error)
 
 
 #*************************END**********************************

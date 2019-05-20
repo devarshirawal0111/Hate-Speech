@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import json
 
+
 app = Flask(__name__)
 
 username = "amitabhbachchan"
@@ -39,7 +40,7 @@ def instagram():
     #     count += 1
     #     if count == len(data):
     #         all_data.append(temp)
-    print((all_data))
+    #print((all_data))
     return render_template("instagram.html",data=all_data,length=range(len(data)))
 
 def data_format():
@@ -64,8 +65,9 @@ def data_format():
                     j['skip']=True
                 else:
                     j['skip']=False
-                amt+=1
                 j['media_count'] = str(amt)
+                amt+=1
+
 
         else:
             if 'video_versions' in i.keys():
