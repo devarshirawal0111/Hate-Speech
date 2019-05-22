@@ -4,11 +4,14 @@ import json
 
 app = Flask(__name__)
 
-username = "amitabhbachchan"
+username = "malaikaaroraofficial"
 path = "Data/" + username + "/posts.json"
+path2 = "Data/" + username + "/comments.json"
 
 with open(path) as fileptr:
     data = json.loads(fileptr.read())
+with open(path2) as fileptr:
+    comments = json.loads(fileptr.read())
 all_data=[]
 
 
@@ -40,8 +43,15 @@ def instagram():
     #     count += 1
     #     if count == len(data):
     #         all_data.append(temp)
-    #print((all_data))
-    return render_template("instagram.html",data=all_data,length=range(len(data)))
+    print((all_data))
+    global comments
+    return render_template("instagram.html", data=all_data, length=range(len(all_data)))
+
+@app.route('/instagram/comments/<index>')
+def instaComments(index):
+    global comments
+    index = int(index)
+    return render_template('instaComments.html', comments=comments[index])
 
 def data_format():
     global all_data
@@ -54,33 +64,38 @@ def data_format():
             if count > 0:
                 all_data.append(temp)
             temp = []
-        if 'carousel_media' in i.keys():
-            if 'video_versions' in i['carousel_media'][0]:
-                i['type'] = "carousel_video"
-            else:
-                i['type'] = "carousel_image"
-            amt = 0
-            for j in i['carousel_media']:
-                if amt:
-                    j['skip']=True
+
+        if 'error' in i.keys():
+            if i['error'] is False:
+                if 'carousel_media' in i.keys():
+                    if 'video_versions' in i['carousel_media'][0]:
+                        i['type'] = "carousel_video"
+                    else:
+                        i['type'] = "carousel_image"
+                    amt = 0
+                    for j in i['carousel_media']:
+                        if amt:
+                            j['skip']=True
+                        else:
+                            j['skip']=False
+                        j['media_count'] = str(amt)
+                        amt+=1
+
+
                 else:
-                    j['skip']=False
-                j['media_count'] = str(amt)
-                amt+=1
+                    if 'video_versions' in i.keys():
+                        i['type'] = 'video'
+                    else:
+                        i['type'] = 'image'
+                i['href'] = "#"+i['id']
 
-
-        else:
-            if 'video_versions' in i.keys():
-                i['type'] = 'video'
-            else:
-                i['type'] = 'image'
-        i['href'] = "#"+i['id']
-
-        temp.append(i)
-        # print(temp)
-        count += 1
+                temp.append(i)
+                print(temp)
+                count += 1
+        print(count)
         if count == len(data):
-            all_data.append(temp)
+                    all_data.append(temp)
+    all_data.append(temp)
 
 
 if __name__=='__main__':

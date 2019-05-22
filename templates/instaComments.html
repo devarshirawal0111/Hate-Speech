@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <style>
+        a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 16px;
+            line-height: 20px;
+            color: darkseagreen;
+            font-family: serif;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        a:hover{
+            color: aqua;
+        }
+        html{
+            overflow-x:hidden;
+            
+        }
+    </style>
+</head>
+
+<body>
+    {%for i in comments['comments']%}
+    <p style="color:aliceblue; border:aqua solid 1px; border-radius: 5px; padding:10px"><a
+            href="https://www.instagram.com/{{i['username']}}/" rel="noopener noreferrer"
+            target="_blank">{{i['username']}} : </a>{{i['text']}}</p>
+    {%endfor%}
+</body>
+
+</html>

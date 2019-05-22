@@ -35,7 +35,7 @@ def reformatCommentList(com):
         if i==len(com)-1:
             break
         try:
-            com3 = {"user_id": com[i]['user_id'], "comment_id": com[i]['pk'],"text": com[i]['text']}
+            com3 = {"user_id": com[i]['user_id'], "username":com[i]['user']['username'], "comment_id": com[i]['pk'],"text": com[i]['text']}
             com2.append(com3)
         except:
             i=i+1

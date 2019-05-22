@@ -33,6 +33,10 @@
 
     .image:hover {opacity: 0.8;}
 
+    iframe{
+      overflow-y: hidden;
+    }
+
         /* The Modal (background) */
     .modal {
       display: none; /* Hidden by default */
@@ -54,16 +58,21 @@
       display: block;
       width: 80%;
       max-width: 700px;
+      background: white;
     }
 
     /* Caption of Modal Image */
-    #caption {
+    .caption-box {
       margin: auto;
       display: block;
       width: 80%;
       max-width: 700px;
+      /*text-align: center;*/
+      color: goldenrod;
       text-align: center;
-      color: #ccc;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: 'Courier New', Courier, monospace;
       padding: 10px 0;
       height: 150px;
     }
@@ -118,6 +127,7 @@
         border-top-right-radius: 10px;
         border-bottom-right-radius: 10px;
     }
+
     .card-element{
         padding: 1% 1%;
         border: none;
@@ -129,18 +139,24 @@
   </style>
 
   <script type="text/javascript">
-  function ChangeImg(img_id, modal_id, modImg_id){
+  function ChangeImg(img_id, modal_id, modImg_id, caption,captionElement, commentBoxID, index){
   // Get the modal
   var modal = document.getElementById(modal_id);
 
   // Get the image and insert it inside the modal - use its "alt" text as a caption
   var img = document.getElementById(img_id);
   var modalImg = document.getElementById(modImg_id);
-  //var captionText = document.getElementById();
+  var captionText = document.getElementById(captionElement);
+  var captionID = document.getElementById(caption);
+  var commentBox = document.getElementById(commentBoxID);
 
+  console.log(captionID.value)
+  cap=captionID.value
   modal.style.display = "block";
   modalImg.src = img.src;
-  //captionText.innerHTML = this.alt;
+  console.log(captionText)
+  captionText.innerHTML = cap;
+  commentBox.src = index;
 
 
   // Get the <span> element that closes the modal
@@ -152,21 +168,27 @@
   }
   }
 
-  function ChangeVid(vid_id, modal_id, modVid_id, modVidSource_id, VidSource){
+  function ChangeVid(vid_id, modal_id, modVid_id, VidSource, captionText,caption_id, commentBoxID, index){
   // Get the modal
   var modal = document.getElementById(modal_id);
   //var vid_source = document.getElementById(vidSource_id);
-  var modalVid_source = document.getElementById(modVidSource_id);
+  //var modalVid_source = document.getElementById(modVidSource_id);
 
   // Get the image and insert it inside the modal - use its "alt" text as a caption
   var vid = document.getElementById(vid_id);
   var modalVid = document.getElementById(modVid_id);
-  //var captionText = document.getElementById();
+  var captionText = document.getElementById(captionText);
+  var captionID = document.getElementById(caption_id);
+  var commentBox = document.getElementById(commentBoxID);
 
   modal.style.display = "block";
-  modalVid_source.src = VidSource;
-  //modalVid.poster = vid.src;
-  //captionText.innerHTML = this.alt;
+  //modalVid_source.src = VidSource;
+  modalVid.src = VidSource;
+  //captionText.innerHTML = captionID.value;
+  cap = captionID.value;
+  captionText.innerHTML=cap;
+  commentBox.src=index;
+  console.log(cap)
 
 
   // Get the <span> element that closes the modal
@@ -174,6 +196,7 @@
 
   // When the user clicks on <span> (x), close the modal
   span.onclick = function() {
+    modalVid.pause()
   modal.style.display = "none";
   }
 }
@@ -186,26 +209,47 @@
 
 <!-- The Modal -->
   <div id="ImgModal" class="modal" style="background:rgba(0,0,0,0.9)">
-    <span class="close">&times;</span>
-    <img class="modal-content" id="img01" style="width:100%; max-width:500px" >
-    <div id="caption"></div>
+      <span class="close">&times;</span>
+    <div class="container">
+   <div class="row">
+      <div class="col-9">
+    <img id="img01" class="modal-content" style="width:100%; max-width:640px" >
+      <div class="caption-box" id="caption_img"></div>
+  </div>
+   
+     <div class="col-3">
+       <iframe id="iframe_img" class="row" style="width:480px; height:85%; margin: auto" src="" frameborder="0"></iframe>
+     </div>
+   </div>
+    </div>
   </div>
 
 <div id="VidModal" class="modal" style="background:rgba(0,0,0,0.9)">
-  <span class="close">&times;</span>
-  <div class="embed-responsive embed-responsive-16by9 modal-content" style="width:100%; max-width:300px">
-    <video id="ModVid" controls autoplay loop>
-      <source id="ModVidSrc" src="" type="video/mp4">
-    </video>
+    <span class="close">&times;</span>
+  <div class="container">
+  
+    <div class="row">
+      <div class="col-9">
+       
+            <video id="iframeElement" class="video-fluid embed-responsive-item" width="100%" style="max-height:700px" src="" autoplay controls>
+              </video>
+         
+        <div class="caption-box" id="caption_1234"></div>
+      </div>
+      <div class="col-3">
+          <iframe id="iframe_vid" class="row" style="width:480px; height:85%; margin: auto" src="" frameborder="0"></iframe>
+      </div>
+        
+
+      </div>
+    </div>
+  </div>
   </div>
 
-
-    <div id="Vidcaption"></div>
-  </div>
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html">Social Media Analytics</a>
+    <a class="navbar-brand mr-1" href="index">Social Media Analytics</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
@@ -320,7 +364,8 @@
           {% for col in row %}
           {% if col['type'] == "image" %}
           <div class="card card-element">
-            <img id="img_{{col['id']}}" class="card-img-top image" width="240px" height="240 px" onclick="ChangeImg('img_{{col['id']}}','ImgModal','img01')" src= "{{ col['image_versions2']['candidates'][0]['url'] }}" alt="Card image cap">
+            <input type="hidden" value="{{col['caption']['text']}}" id="cap_{{col['id']}}">
+            <img id="img_{{col['id']}}" class="card-img-top image" width="240px" height="240 px" onclick="ChangeImg('img_{{col['id']}}','ImgModal','img01', 'cap_{{col['id']}}','caption_img','iframe_img','/instagram/comments/{{col['index']}}')" src= "{{ col['image_versions2']['candidates'][0]['url'] }}" alt="Card image cap">
             <div class="card-body">
               <p class="card-text"> {{col['caption']['text']}} </p>
               <p class="card-text">
@@ -333,8 +378,9 @@
           {% if col['type'] == "video" %}
           <div class="card card-element">
 
-
-              <img class="image card-img-top" id="vid_{{col['id']}}" src="{{col['image_versions2']['candidates'][1]['url']}}" onclick="ChangeVid('vid_{{col['id']}}','VidModal', 'ModVid', 'ModVidSrc', '{{col['video_versions'][0]['url']}}')">
+              <input type="hidden" value="{{col['caption']['text']}}" id="cap_{{col['id']}}">
+              <img class="image card-img-top" id="vid_{{col['id']}}" src="{{col['image_versions2']['candidates'][1]['url']}}" onclick="ChangeVid('vid_{{col['id']}}','VidModal', 'iframeElement', '{{col['video_versions'][1  ]['url']}}', 'caption_1234','cap_{{col['id']}}','iframe_vid','/instagram/comments/{{col['index']}}')">
+              
 
             <div class="card-body">
               <p class="card-text"> {{col['caption']['text']}} </p>
