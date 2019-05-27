@@ -27,19 +27,11 @@
 
   <style>
     .image{
-      -webkit-filter: brightness(100%);
       cursor: pointer;
-      transition: 0.3s;
+      transition: 0.3s
     }
 
-    .image:hover {
-      -webkit-filter: brightness(70%);
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    -ms-transition: all 0.3s ease;
-    transition: all 0.3s ease;
-    }
+    .image:hover {opacity: 0.8;}
 
     iframe{
       overflow-y: hidden;
@@ -76,7 +68,7 @@
       width: 80%;
       max-width: 700px;
       /*text-align: center;*/
-      color: white;
+      color: goldenrod;
       text-align: center;
       font-size: 16px;
       font-weight: bold;
@@ -144,12 +136,6 @@
         width: 100%;
         height: 100%;
     }
-
-    .card-element img{
-        height: 293px;
-        width: 293px;
-    }
-
   </style>
 
   <script type="text/javascript">
@@ -215,43 +201,6 @@
   }
 }
 
-function ChangeCar(car_id, modal_id, modCar_id, CardSource, captionText,caption_id, commentBoxID, index, div_car){
-  // Get the modal
-  var modal = document.getElementById(modal_id);
-  //var vid_source = document.getElementById(vidSource_id);
-  //var modalVid_source = document.getElementById(modVidSource_id);
-
-  // Get the image and insert it inside the modal - use its "alt" text as a caption
-  var carousel = document.getElementById(car_id);
-  var modalCarousel = document.getElementById(modCar_id);
-  var captionText = document.getElementById(captionText);
-  var captionID = document.getElementById(caption_id);
-  var commentBox = document.getElementById(commentBoxID);
-  var div = document.getElementById(div_car)
-
-  
-
-
-  modal.style.display = "block";
-  //modalVid_source.src = VidSource;
-  modalCarousel.src = CardSource;
-  //captionText.innerHTML = captionID.value;
-  cap = captionID.value;
-  captionText.innerHTML=cap;
-  commentBox.src=index;
-  console.log(cap)
-
-
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[2];
-
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-    //modalCarousel.pause()
-  modal.style.display = "none";
-  }
-}
-
   </script>
 
 </head>
@@ -263,12 +212,12 @@ function ChangeCar(car_id, modal_id, modCar_id, CardSource, captionText,caption_
       <span class="close">&times;</span>
     <div class="container">
    <div class="row">
-      <div class="col-9" style="margin:0%; padding: 0;">
+      <div class="col-9">
     <img id="img01" class="modal-content" style="width:100%; max-width:640px" >
       <div class="caption-box" id="caption_img"></div>
   </div>
    
-     <div class="col-3" style="margin:0%; padding: 0;">
+     <div class="col-3">
        <iframe id="iframe_img" class="row" style="width:480px; height:85%; margin: auto" src="" frameborder="0"></iframe>
      </div>
    </div>
@@ -301,13 +250,13 @@ function ChangeCar(car_id, modal_id, modCar_id, CardSource, captionText,caption_
       <span class="close">&times;</span>
     <div class="container">
    <div class="row">
-      <div class="col-9" id="div_iframe" style="width=200px; height:100%; margin:auto">
-        <iframe class="row" id="iframe_car" style="margin:auto" src=""></iframe>
-      <div class="caption-box row" id="caption_car"></div>
+      <div class="col-9">
+        <iframe src="" frameborder="0"></iframe>
+      <div class="caption-box" id="caption_car"></div>
   </div>
    
      <div class="col-3">
-       <iframe id="iframe_car2" class="row" style="width:480px; height:100%; margin: auto" src="" frameborder="0"></iframe>
+       <iframe id="iframe_img" class="row" style="width:480px; height:85%; margin: auto" src="" frameborder="0"></iframe>
      </div>
    </div>
     </div>
@@ -422,32 +371,8 @@ function ChangeCar(car_id, modal_id, modCar_id, CardSource, captionText,caption_
 
     <div id="content-wrapper">
 
-      <div class="container">
+      <div class="container-fluid">
 
-        <!-- Breadcrumbs-->
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="#">Instagram</a>
-          </li>
-          <li class="breadcrumb-item active">Your posts</li>
-        </ol>
-
-        <div class="row">
-          <div class="col-4">
-            <img src="{{data[0][0]['user']['profile_pic_url']}}"  style="width:auto; padding: auto; border-radius:50%" alt="">
-          </div><div class="row">
-          <div class="col-8">
-            <div class="row">
-              <h1>{{data[0][0]['user']['username']}}</h1>
-            </div>
-            <div class="row">
-              <h5 style="font-weight:600; display: inline;">{{data[0][0]['user']['full_name']}}</h5>
-            </div>
-          </div>
-
-        </div>
-
-        </div>
 
         <div>
         {% for row in data %}
@@ -456,10 +381,11 @@ function ChangeCar(car_id, modal_id, modCar_id, CardSource, captionText,caption_
           {% if col['type'] == "image" %}
           <div class="card card-element">
             <input type="hidden" value="{{col['caption']['text']}}" id="cap_{{col['id']}}">
-            <img id="img_{{col['id']}}" class="card-img-top image" width="293px" height="293px" onclick="ChangeImg('img_{{col['id']}}','ImgModal','img01', 'cap_{{col['id']}}','caption_img','iframe_img','/instagram/comments/{{col['index']}}')" src= "{{ col['image_versions2']['candidates'][0]['url'] }}" alt="Card image cap">
+            <img id="img_{{col['id']}}" class="card-img-top image" width="240px" height="240 px" onclick="ChangeImg('img_{{col['id']}}','ImgModal','img01', 'cap_{{col['id']}}','caption_img','iframe_img','/instagram/comments/{{col['index']}}')" src= "{{ col['image_versions2']['candidates'][0]['url'] }}" alt="Card image cap">
             <div class="card-body">
+              <p class="card-text"> {{col['caption']['text']}} </p>
               <p class="card-text">
-               
+                <small class="text-muted">Last updated 3 mins ago</small>
               </p>
             </div>
           </div>
@@ -473,23 +399,103 @@ function ChangeCar(car_id, modal_id, modCar_id, CardSource, captionText,caption_
               
 
             <div class="card-body">
+              <p class="card-text"> {{col['caption']['text']}} </p>
               <p class="card-text">
+                <small class="text-muted">Last updated 3 mins ago</small>
               </p>
             </div>
           </div>
           <br>
           {% endif %}
-          {% if col['type']=="carousel" %}
-          <div class="card card-element">
-          <input type="hidden" value="{{col['caption']['text']}}" id="cap_{{col['id']}}">
-          <img id="car_{{col['id']}}" class="card-img-top image" width="240px" height="240 px" onclick="ChangeCar('col_{{col['id']}}','CarModal','iframe_car', '/instagram/carouselPost/{{col['index']}}', 'caption_car', 'cap_{{col['id']}}','iframe_car2','/instagram/comments/{{col['index']}}','div_iframe')" src= "{{ col['carousel_media'][0]['image_versions2']['candidates'][0]['url'] }}" alt="Card image cap">
-          <div class="card-body">
-            <p class="card-text">
-            </p>
+          {% if col['type'] == "carousel_video" %}
+          <!--Carousel Wrapper-->
+          <div id="vid_{{col['id']}}" class="carousel slide" data-interval="false">
+            <!--Indicators-->
+            <ol class="carousel-indicators">
+              {% for j in col['carousel_media'] %}
+              {% if not j['skip'] %}
+              <li data-target="#vid_{{col['id']}}" data-slide-to="{{j['media_count']}}" class="active"></li>
+              {%else%}
+              <li data-target="#vid_{{col['id']}}" data-slide-to="{{j['media_count']}}"></li>
+              {%endif%}
+              {%endfor%}
+            </ol>
+            <!--/.Indicators-->
+            <!--Slides-->
+            <div class="carousel-inner" role="listbox">
+              {% for j in col['carousel_media'] %}
+              {% if not j['skip'] %}
+              <div class="carousel-item active embed-responsive-1by1">
+                <video class="video-fluid embed-responsive-item" controls width="240px" height="240px">
+                  <source src="{{j['video_versions'][0]['url']}}" type="video/mp4"/>
+                </video>
+              </div>
+              {%else%}
+              <div class="carousel-item embed-responsive-1by1">
+                <video class="video-fluid embed-responsive-item" controls width="240px" height="240px">
+                  <source src="{{j['video_versions'][0]['url']}}" type="video/mp4"/>
+                </video>
+              </div>
+              {%endif%}
+              {%endfor%}
+            </div>
+            <!--/.Slides-->
+            <!--Controls-->
+            <a class="carousel-control-prev" href="#vid_{{col['id']}}" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#vid_{{col['id']}}" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+            <!--/.Controls-->
           </div>
-        </div>
-        <br>
-        {%endif%}
+
+          <!--Carousel Wrapper-->
+          {%endif%}
+          {% if col['type'] == "carousel_image" %}
+          <div class="card">
+
+            <div id="img_{{col['id']}}" class = "carousel slide" data-interval="false">
+              <div class="carousel-inner">
+
+                <ul class="carousel-indicators">
+                  {% for j in col['carousel_media'] %}
+                  {% if not j['skip'] %}
+                  <li data-target="#img_{{ col['id'] }}" data-slide-to={{ j['media_count'] }} class="active"></li>
+
+                  {% else %}
+                  <li data-target="#img_{{ col['id'] }}" data-slide-to={{ j['media_count'] }}></li>
+                  {% endif %}
+                  {% endfor %}
+                </ul>
+                {% for j in col['carousel_media'] %}
+                {% if not j['skip'] %}
+                <div class="carousel-item active">
+                  <img class="d-block w-100" src="{{ j['image_versions2']['candidates'][1]['url'] }}"
+                       alt="First slide">
+                </div>
+                {% endif %}
+                <div class="carousel-item">
+                  <img class="d-block w-100" src="{{j['image_versions2']['candidates'][1]['url']}}"
+                       alt="First slide">
+                </div>
+                {% endfor %}
+              </div>
+              <p class="card-text"> {{col['caption']['text']}} </p>
+              <a class="carousel-control-prev" href="#img_{{col['id']}}" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="#img_{{col['id']}}" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+              </a>
+          </div>
+          </div>
+          <br>
+          {% endif %}
           {% endfor %}
         </div>
         {% endfor %}
