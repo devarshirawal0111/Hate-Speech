@@ -5,8 +5,8 @@ from appender import appendUserFeed
 from reformat import reformatUserFeed, reformatCommentList
 
 
-user_name = 'devarshi.raval'
-password = 'tvtokyo7'
+user_name = ''
+password = ''
 
 api = Client(user_name, password)
 
